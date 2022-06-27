@@ -1,5 +1,7 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,29 +11,16 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
-    @Transactional
+    @Transactional //Test 어노테이션과 함께 사용 시 자동 롤백
     @Rollback(false)
     public void testMember() throws Exception {
-        //given
-        Member member = new Member();
-        member.setUsername("memberA");
-
-        //when
-        Long saveId = memberRepository.save(member);
-        Member findMember = memberRepository.find(saveId);
-
-        //then
-        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
-        Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-
     }
 }
